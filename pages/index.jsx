@@ -23,7 +23,19 @@ export default function Home() {
   const [campaignTag, setCampaignTag] = useState(["all"]);
   const [next, setNext] = useState(10);
   const [more, setMore] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    getCampaignList();
+  }, [next, campaignTag, search]);
+
+  const getCampaignList = async () => {
+    setLoading(true);
+    const result = await fetchCampaignList(next, campaignTag.join(","), search);
+    setCampainList(result?.data?.results);
+    setLoading(false);
+  };
 
   const updateTag = (val) => {
     if (val === "all") {
@@ -47,15 +59,6 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    getCampaignList();
-  }, [next, campaignTag, search]);
-
-  const getCampaignList = async () => {
-    const result = await fetchCampaignList(next, campaignTag.join(","), search);
-    setCampainList(result?.data?.results);
-  };
-
   return (
     <>
       <main>
@@ -65,7 +68,13 @@ export default function Home() {
               <h2>Quests ({campainList?.length})</h2>
               <div className={style.headSearch}>
                 <Search />
-                <input type="text" placeholder="Search Quest or Project" onChange={(e) => {setSearch(e.target.value)}}/>
+                <input
+                  type="text"
+                  placeholder="Search Quest or Project"
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                  }}
+                />
               </div>
             </div>
           </div>
@@ -138,92 +147,95 @@ export default function Home() {
               </li>
             </ul>
           </div>
-          {campainList?.length ? (
-            <div className={style.questContainer}>
-              {campainList.map((campaign, i) => {
-                const timeLeft = moment.duration(
-                  campaign?.start_date,
-                  campaign?.end_date
-                )._data;
-                return (
-                  <div className={style.questCardSkeliton} key={i}>
-                    <div className={style.questCard}>
-                      <div className={style.questCardHead}>
-                        {
+          {
+            loading ? <h1>Loading...</h1> :
+            campainList?.length ? (
+              <div className={style.questContainer}>
+                {campainList.map((campaign, i) => {
+                  const timeLeft = moment.duration(
+                    campaign?.start_date,
+                    campaign?.end_date
+                  )._data;
+                  return (
+                    <div className={style.questCardSkeliton} key={i}>
+                      <div className={style.questCard}>
+                        <div className={style.questCardHead}>
+                          {
+                            <Image
+                              src={campaign?.banner_image ?? poly}
+                              alt="banner"
+                            />
+                          }
+  
+                          <div>
+                            <p
+                              className={
+                                timeLeft?.hours < 3
+                                  ? "grey"
+                                  : timeLeft?.hours > 3 || timeLeft?.hours < 24
+                                  ? "red"
+                                  : "green"
+                              }
+                            >
+                              <Timer />
+                              {timeLeft?.hours < 24
+                                ? timeLeft?.hours + " hrs "
+                                : timeLeft.days + " days "}
+                              left
+                            </p>
+                            {timeLeft?.hours < 3 ? (
+                              <span>Done</span>
+                            ) : timeLeft?.hours > 3 || timeLeft?.hours < 24 ? (
+                              ""
+                            ) : (
+                              <label>NEW ✨</label>
+                            )}
+                          </div>
+                        </div>
+                        <h3>{campaign?.name}</h3>
+                        <div className={style.questCardBody}>
                           <Image
-                            src={campaign?.banner_image ?? poly}
-                            alt="banner"
+                            src={`${campaign?.campaign_reward_data?.reward_image}`}
+                            width={93}
+                            height={93}
+                            alt={campaign?.campaign_reward_data?.reward_title}
                           />
-                        }
-
-                        <div>
-                          <p
-                            className={
-                              timeLeft?.hours < 3
-                                ? "grey"
-                                : timeLeft?.hours > 3 || timeLeft?.hours < 24
-                                ? "red"
-                                : "green"
-                            }
-                          >
-                            <Timer />
-                            {timeLeft?.hours < 24
-                              ? timeLeft?.hours + " hrs "
-                              : timeLeft.days + " days "}
-                            left
+                          <p>{campaign?.campaign_reward_data?.reward_title}</p>
+                        </div>
+                        <div className={style.questCardFooter}>
+                          <People />
+                          <div>
+                            {campaign?.quester_details?.questers_pics.map(
+                              (e, i) => {
+                                return (
+                                  <Image
+                                    key={i}
+                                    src={`${e}`}
+                                    width={26}
+                                    height={26}
+                                    alt="profile"
+                                  />
+                                );
+                              }
+                            )}
+                          </div>
+                          <p>
+                            +{campaign?.quester_details?.questers_count / 1000}
                           </p>
-                          {timeLeft?.hours < 3 ? (
-                            <span>Done</span>
-                          ) : timeLeft?.hours > 3 || timeLeft?.hours < 24 ? (
-                            ""
-                          ) : (
-                            <label>NEW ✨</label>
-                          )}
                         </div>
-                      </div>
-                      <h3>{campaign?.name}</h3>
-                      <div className={style.questCardBody}>
-                        <Image
-                          src={`${campaign?.campaign_reward_data?.reward_image}`}
-                          width={93}
-                          height={93}
-                          alt={campaign?.campaign_reward_data?.reward_title}
-                        />
-                        <p>{campaign?.campaign_reward_data?.reward_title}</p>
-                      </div>
-                      <div className={style.questCardFooter}>
-                        <People />
-                        <div>
-                          {campaign?.quester_details?.questers_pics.map(
-                            (e, i) => {
-                              return (
-                                <Image
-                                  key={i}
-                                  src={`${e}`}
-                                  width={26}
-                                  height={26}
-                                  alt="profile"
-                                />
-                              );
-                            }
-                          )}
-                        </div>
-                        <p>
-                          +{campaign?.quester_details?.questers_count / 1000}
-                        </p>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
-              <div className={style.questCardSkeliton}></div>
-              <div className={style.questCardSkeliton}></div>
-              <div className={style.questCardSkeliton}></div>
-            </div>
-          ) : (
-            <h1>Loading ...</h1>
-          )}
-          {campainList?.length >= next ? (
+                  );
+                })}
+                <div className={style.questCardSkeliton}></div>
+                <div className={style.questCardSkeliton}></div>
+                <div className={style.questCardSkeliton}></div>
+              </div>
+            ) : (
+              <h1>Oops No Data Found.</h1>
+            )}
+          
+          {!loading &&  campainList?.length >= next ? (
             <a
               onClick={() => setNext(next + 10)}
               className={style.questViewMore}
