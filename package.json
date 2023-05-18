@@ -6,17 +6,22 @@
     "dev": "next dev",
     "build": "next build && next export",
     "start": "next start",
+    "test": "react-scripts test",
     "prepare": "husky install",
     "lint": "eslint --fix '**/*.{js,jsx}'",
     "prettier": "prettier --write '**/*.{jsx,js}'",
     "prettier-sass": "prettier --single-quote --parser scss --write '**/*.scss'"
   },
   "dependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.4.3",
     "axios": "^1.4.0",
     "moment": "^2.29.4",
     "next": "13.4.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-scripts": "^5.0.1"
   },
   "devDependencies": {
     "eslint": "^8.40.0",
