@@ -1,0 +1,244 @@
+@import "/styles/variables.scss";
+
+.head {
+  padding: 72px 0 24px;
+  &Content {
+    @include flex-center($jc: space-between);
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+    h2 {
+      @include font-semi-bold($font-size: 2.4rem);
+      line-height: 133%;
+    }
+  }
+  &Search {
+    position: relative;
+    @include flex-center;
+    gap: 8px;
+    padding: 12px 26px 12px 8px;
+    background-color: $color-black-1;
+    border-radius: 8px;
+    max-width: 264px;
+    width: 100%;
+    input {
+      background-color: transparent;
+      border: none;
+      @include font-medium($font-size: 1.6rem);
+      line-height: 150%;
+      color: $color-white-1;
+      width: 100%;
+      &:focus-visible {
+        outline: none;
+      }
+      &::placeholder {
+        color: $color-white-2;
+        @include font-medium($font-size: 1.6rem);
+        line-height: 150%;
+        color: $color-white-2;
+      }
+    }
+  }
+}
+
+.quest {
+  padding-bottom: 72px;
+  h1{
+    @include font-semi-bold($font-size : 4rem);
+    max-width: fit-content;
+    margin: 0 auto;
+    line-height: 150%;
+    display: block;
+  }
+  &Filters {
+    padding-bottom: 24px;
+    @include flex-center;
+    gap: 8px;
+    flex-wrap: wrap;
+    li {
+      @include font-medium($font-size: 2rem);
+      line-height: 140%;
+      @include flex-center;
+      gap: 8px;
+      padding: 9px 16px;
+      border: 1px solid rgba(111, 118, 126, 0.4);
+      border-radius: 12px;
+      cursor: pointer;
+      position: relative;
+      &.active{
+        background-color: $color-green-0;
+        color: $color-white-0;
+        path{
+          fill: $color-white-0;
+        }
+      }
+      input{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        &:focus-visible{
+          outline: none;
+        }
+      }
+      &.more{
+        max-width: 240px;
+        width: 100%;
+        justify-content: space-between;
+        border-bottom: none;
+        border-radius: 12px 12px 0 0;
+        background-color: $color-black-1;
+        &:hover{
+          border-bottom: none;
+        }
+      }
+      &:hover {
+        border: 1px solid $color-green-1;
+        ul{
+          border: 1px solid $color-green-1;
+        }
+      }
+      ul {
+        position: absolute;
+        top: 46px;
+        left: -1px;
+        z-index: 1;
+        width: 240px;
+        border: 1px solid #272B30;
+        padding: 8px 16px;
+        border-radius: 0 0 12px 12px ;
+        background-color: $color-black-1;
+        li {
+          margin-bottom: 8px;
+          border: none;
+          &:hover{
+            border: none;
+
+          }
+        }
+      }
+    }
+  }
+  &Container {
+    @include flex-center;
+    gap: 24px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  &CardSkeliton {
+    max-width: 384px;
+    width: 100%;
+    background-color: $color-black-2;
+    border-radius: 12px;
+    overflow: hidden;
+    align-self: stretch;
+    flex-basis: 30%;
+    flex-grow: 1;
+    @media (max-width : 992px){
+      flex-basis: 45%;
+      max-width: 100%;
+    }
+    @media (max-width : 768px){
+      flex-basis: 100%;
+    }
+  }
+  &Card {
+    padding: 24px;
+    background-color: $color-black-3;
+    @include flex-center;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    &Head {
+      @include flex-center($jc: space-between);
+      width: 100%;
+      div {
+        @include flex-center;
+        gap: 8px;
+      }
+      p {
+        @include flex-center;
+        letter-spacing: 0.02em;
+        @include font-medium($font-size: 1.2rem);
+        color: $color-green-2;
+        gap: 8px;
+        line-height: 133%;
+      }
+      label {
+        color: $color-yellow-0;
+        letter-spacing: 0.015em;
+        @include font-medium($font-size: 1.4rem);
+        line-height: 143%;
+        padding: 2px 6px;
+        background: rgba(251, 191, 36, 0.08);
+        border-radius: 8px;
+      }
+      span {
+        letter-spacing: 0.015em;
+        @include font-medium($font-size: 1.4rem);
+        line-height: 143%;
+        padding: 1px 6px;
+        border-radius: 8px;
+        color: $color-green-2;
+        border: 1px solid #064e3b;
+      }
+    }
+    h3 {
+      @include font-medium($font-size: 2rem);
+      line-height: 140%;
+      color: $color-white-0;
+      min-height: 56px;
+    }
+    &Body {
+      @include flex-center;
+      gap: 12px;
+      img {
+        border-radius: 16px;
+      }
+      p {
+        @include font-medium;
+        letter-spacing: 0.01em;
+        line-height: 150%;
+      }
+    }
+    &Footer {
+      @include flex-center;
+      gap: 4px;
+      div {
+        @include flex-center;
+        gap: 4px;
+        img {
+          border-radius: 50%;
+          border: 2px solid $color-black-3;
+          &:not(:first-child) {
+            margin-left: -10px;
+          }
+        }
+      }
+      p {
+        padding: 4px;
+        @include font-semi-bold($font-size: 1.2rem);
+        line-height: 133%;
+        letter-spacing: 0.02em;
+      }
+    }
+  }
+  &ViewMore{
+    letter-spacing: 0.015em;
+    cursor: pointer;
+    @include font-semi-bold($font-size : 1.4rem);
+    line-height: 143%;
+    color: $color-white-0;
+    padding: 10px 24px;
+    border: 1.5px solid $color-purple-0;
+    border-radius: 99px;
+    max-width: fit-content;
+    margin: 0 auto;
+    display: block;
+  }
+}

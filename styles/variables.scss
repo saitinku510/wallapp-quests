@@ -1,0 +1,42 @@
+$color-black-0 : #000000;
+$color-black-1 : #1A1D1F;
+$color-black-2 : #27272A;
+$color-black-3 : #111315;
+
+$color-white-0 : #ffffff;
+$color-white-1 : #C8CBCC;
+$color-white-2 : #6F767E;
+
+$color-green-0 : #065F46;
+$color-green-1 : #059669;
+$color-green-2 : #10B981;
+
+$color-yellow-0 : #FBBF24;
+
+$color-red-0 : #F43F5E;
+$color-purple-0 : #6366F1;
+
+@mixin flex-center($jc : start) {
+    display: flex;
+    align-items: center;
+    justify-content: $jc;
+}
+
+// Font mixins
+// Regular fonts
+@mixin font-regular($font-size : 1.6rem) {
+    font-size: $font-size;
+    font-weight: 400;
+}
+
+// Medium fonts
+@mixin font-medium($font-size : 1.6rem) {
+    font-size: $font-size;
+    font-weight: 500;
+}
+
+// Semi bold fonts
+@mixin font-semi-bold($font-size : 1.6rem) {
+    font-size: $font-size;
+    font-weight: 600;
+}

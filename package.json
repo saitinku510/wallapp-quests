@@ -1,0 +1,30 @@
+{
+  "name": "sample",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build && next export",
+    "start": "next start",
+    "prepare": "husky install",
+    "lint": "eslint --fix '**/*.{js,jsx}'",
+    "prettier": "prettier --write '**/*.{jsx,js}'",
+    "prettier-sass": "prettier --single-quote --parser scss --write '**/*.scss'"
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "moment": "^2.29.4",
+    "next": "13.4.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.40.0",
+    "eslint-config-next": "13.4.1",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-react": "^7.32.2",
+    "husky": "^8.0.3",
+    "prettier": "^2.8.8",
+    "sass": "^1.62.1"
+  }
+}
